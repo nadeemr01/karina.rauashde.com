@@ -12,9 +12,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from content import (T, LANGS, LANG_PREFIX, SWITCH_LABEL, SWITCH_NAME, PAGES, SLUG, NEXT,  # noqa: E402
-                     PHONE_DISPLAY, PHONE_TEL, WHATSAPP, EMAIL, CV_FILE, SITE)
+                     PHONE_DISPLAY, PHONE_TEL, WHATSAPP, EMAIL, SITE)
 
-VERSION = "2"  # bump after editing css/js so browsers fetch the new files
+VERSION = "3"  # bump after editing css/js so browsers fetch the new files
 
 ICONS = {
     "syringe": '<path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3a2.4 2.4 0 0 1-3.4 0l-.6-.6a2.4 2.4 0 0 1 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/>',
@@ -59,16 +59,15 @@ MOTES = [  # x%, bottom%, size px, duration s, delay s, drift px
     (34, 22, 3, 9, 8, 12), (70, 40, 3, 10, 2, -10),
 ]
 
-PHOTO_POS = {"about": "50% 42%", "experience": "50% 30%", "treatments": "40% 30%"}   # page heroes (4:5)
-TILE_POS = {"about": "50% 54%", "experience": "50% 22%", "treatments": "45% 34%"}    # home tiles (wide)
+PHOTO_POS = {"experience": "50% 30%"}   # page heroes (4:5)
+TILE_POS = {"experience": "50% 22%"}    # home tiles (wide)
+
+# "Hello" in her three languages, shown on the home About tile
+GREETINGS = [("Hello", "en", "ltr"), ("مرحبًا", "ar", "rtl"), ("Здравствуйте", "ru", "ltr")]
 
 
 def href(lang, page):
     return "/" + LANG_PREFIX[lang] + SLUG[page]
-
-
-def cv_href():
-    return "/" + CV_FILE
 
 
 def picture(name, alt, cls="", eager=False, pos=None):
@@ -210,7 +209,6 @@ def gnav(lang, page):
 </header>
 <nav class="menu" id="menu" aria-label="{t["menu"]}">
   <ul>{menu_links}</ul>
-  <a class="menu-cv" href="{cv_href()}" download style="--i:{len(PAGES)}">{icon("download")}{t["cta_cv"]}</a>
 </nav>"""
 
 
@@ -219,8 +217,7 @@ def footer(lang, page):
     pages = "".join(f'<li><a href="{href(lang, p)}">{t["nav"][p]}</a></li>' for p in PAGES)
     contact = (f'<li><a href="tel:{PHONE_TEL}" dir="ltr">{PHONE_DISPLAY}</a></li>'
                f'<li><a href="{WHATSAPP}" target="_blank" rel="noopener">{t["c_whatsapp"]}</a></li>'
-               f'<li><a href="mailto:{EMAIL}" dir="ltr">{EMAIL}</a></li>'
-               f'<li><a href="{cv_href()}" download>{t["cta_cv"]}</a></li>')
+               f'<li><a href="mailto:{EMAIL}" dir="ltr">{EMAIL}</a></li>')
     langs = "".join(
         f'<li><a href="{href(l, page)}" hreflang="{l}" lang="{l}"{" aria-current=\"true\"" if l == lang else ""}>{SWITCH_NAME[l]}</a></li>'
         for l in LANGS
@@ -259,24 +256,23 @@ def next_link(lang, page):
   </section>"""
 
 
-def phero(title, lead, media, extra=""):
+def phero(title, lead, media=""):
+    media_html = f'\n      <div class="phero-media hero-in" style="--i:2">{media}</div>' if media else ""
     return f"""
-  <section class="phero">
+  <section class="phero{"" if media else " phero-center"}">
     <div class="wrap phero-grid">
       <div class="phero-copy">
         <h1 class="phero-title hero-in" style="--i:0">{title}</h1>
-        <p class="phero-lead hero-in" style="--i:1">{lead}</p>{extra}
-      </div>
-      <div class="phero-media hero-in" style="--i:2">{media}</div>
+        <p class="phero-lead hero-in" style="--i:1">{lead}</p>
+      </div>{media_html}
     </div>
   </section>"""
 
 
-def ctas(lang, big=False):
+def ctas(lang, about=True):
     t = T[lang]
-    return (f'<div class="ctas{" ctas-big" if big else ""}">'
-            f'<a class="btn" href="{href(lang, "contact")}">{t["cta_contact"]}</a>'
-            f'<a class="btn btn-outline" href="{cv_href()}" download>{t["cta_cv"]}</a></div>')
+    second = f'<a class="btn btn-outline" href="{href(lang, "about")}">{t["cta_about"]}</a>' if about else ""
+    return f'<div class="ctas"><a class="btn" href="{href(lang, "contact")}">{t["cta_contact"]}</a>{second}</div>'
 
 
 def license_card(lang, tag="h2"):
@@ -297,13 +293,28 @@ def body_home(lang):
 
     def tile_photo(p):
         title, sub = t["tiles"][p]
-        alt = {"about": t["about_alt"], "experience": t["exp_alt"], "treatments": t["tr_alt"]}[p]
+        alt = {"experience": t["exp_alt"]}[p]
         return f"""
       <a class="tile tile-photo reveal" href="{href(lang, p)}">
         <div class="tile-copy"><h2 class="tile-title">{title}</h2><p class="tile-sub">{sub}</p><span class="more">{t["more"]}{CHEV}</span></div>
         {picture(p, alt, "tile-media", pos=TILE_POS[p])}
       </a>"""
 
+    def tile_art(p, art, cls=""):
+        title, sub = t["tiles"][p]
+        return f"""
+      <a class="tile tile-art {cls} reveal" href="{href(lang, p)}">
+        <div class="tile-copy"><h2 class="tile-title">{title}</h2><p class="tile-sub">{sub}</p><span class="more">{t["more"]}{CHEV}</span></div>
+        <div class="art" aria-hidden="true">{art}</div>
+      </a>"""
+
+    greet = "".join(
+        f'<span lang="{code}" dir="{d}"{" class=\"is-own\"" if code == lang else ""}>{word}</span>'
+        for word, code, d in GREETINGS
+    )
+    tr_icons = "".join(
+        f'<span class="tr-icon">{icon(ic)}<small>{title}</small></span>' for _, ic, title, _, _ in t["proc"]
+    )
     edu_title, edu_sub = t["tiles"]["education"]
     c_title, c_sub = t["tiles"]["contact"]
     return f"""
@@ -334,7 +345,7 @@ def body_home(lang):
   </section>
 
   <section class="tiles-wrap" aria-label="{t["menu"]}">
-    <div class="tiles">{tile_photo("about")}{tile_photo("experience")}{tile_photo("treatments")}
+    <div class="tiles">{tile_art("about", f'<div class="greet">{greet}</div>', "tile-greet")}{tile_photo("experience")}{tile_art("treatments", f'<div class="tr-icons">{tr_icons}</div>')}
       <a class="tile tile-license reveal" href="{href(lang, "education")}">
         <div class="tile-copy"><h2 class="tile-title">{edu_title}</h2><p class="tile-sub">{edu_sub}</p><span class="more">{t["more"]}{CHEV}</span></div>
         <div class="lic-art" aria-hidden="true">
@@ -346,7 +357,7 @@ def body_home(lang):
       <div class="tile tile-contact reveal">
         <div class="tile-copy">
           <h2 class="tile-title">{c_title}</h2><p class="tile-sub">{c_sub}</p>
-          {ctas(lang)}
+          {ctas(lang, about=False)}
         </div>
       </div>
     </div>
@@ -365,7 +376,7 @@ def body_about(lang):
         for native, label, code in t["langs"]
     )
     return f"""
-<main id="main">{phero(t["about_title"], t["about_lead"], picture("about", t["about_alt"], "photo", eager=True))}
+<main id="main">{phero(t["about_title"], t["about_lead"])}
 
   <section class="section">
     <div class="wrap narrow">
@@ -457,7 +468,7 @@ def body_treatments(lang):
     </div>
   </section>""")
     return f"""
-<main id="main">{phero(t["tr_title"], t["tr_lead"], picture("treatments", t["tr_alt"], "photo", eager=True))}
+<main id="main">{phero(t["tr_title"], t["tr_lead"])}
   <nav class="seg" aria-label="{t["tr_jump"]}"><div class="seg-inner">{seg}</div></nav>
 {"".join(cats)}
 {next_link(lang, "treatments")}
@@ -499,10 +510,6 @@ def body_contact(lang):
         <a class="ccard reveal" href="{WHATSAPP}" target="_blank" rel="noopener">{icon("chat")}<span class="k">{t["c_whatsapp"]}</span><span class="v">{t["c_whatsapp_v"]}</span></a>
         <a class="ccard reveal" href="mailto:{EMAIL}">{icon("mail")}<span class="k">{t["c_email"]}</span><span class="v" dir="ltr">{EMAIL}</span></a>
         <div class="ccard reveal">{icon("pin")}<span class="k">{t["c_location"]}</span><span class="v">{t["c_location_v"]}</span></div>
-      </div>
-      <div class="cv-card reveal">
-        <div><h2 class="cv-title">{t["c_cv_title"]}</h2><p>{t["c_cv_text"]}</p></div>
-        <div class="cv-action"><a class="btn btn-light" href="{cv_href()}" download>{icon("download")}{t["cta_cv"]}</a><small>{t["cv_meta"]}</small></div>
       </div>
     </div>
   </section>

@@ -6,7 +6,6 @@ PHONE_DISPLAY = "+7 961 668-94-81"
 PHONE_TEL = "+79616689481"
 WHATSAPP = "https://wa.me/79616689481"
 EMAIL = "karinar888@mail.ru"
-CV_FILE = "Karina-Rauashde-CV.pdf"
 SITE = "https://karina.rauashde.com/"
 
 LANGS = ["en", "ar", "ru"]
@@ -54,8 +53,7 @@ T["en"] = dict(
     more="Learn more",
     next="Next",
     cta_contact="Get in touch",
-    cta_cv="Download CV",
-    cv_meta="PDF · 2 pages · English",
+    cta_about="About Karina",
 
     # ── home
     hero_eyebrow="Dermatologist · Riyadh",
@@ -73,7 +71,7 @@ T["en"] = dict(
         "experience": ("Experience.", "From residency in Moscow to Ashab Clinics in Riyadh."),
         "treatments": ("Treatments.", "Injectables, lasers, skin renewal and medical dermatology."),
         "education": ("Education &amp; licensing.", "VolgSMU, RUDN University and an SCFHS classification."),
-        "contact": ("Let’s talk.", "In Arabic, Russian or English."),
+        "contact": ("Every skin has a story.", "I’m here to listen — in Arabic, Russian or English."),
     },
     lic_tile_rank="Registrar",
     lic_tile_field="Dermatology",
@@ -81,7 +79,6 @@ T["en"] = dict(
     # ── about
     about_title="About Karina.",
     about_lead="Care for skin, hair and nails — personal to every patient.",
-    about_alt="Dr. Karina Rauashde in a white coat over black scrubs",
     about_intro="I’m a dermatologist with more than five years of experience as a doctor, "
                 "now practicing at Ashab Clinics in Riyadh.",
     about_p=[
@@ -148,7 +145,6 @@ T["en"] = dict(
     # ── treatments
     tr_title="Treatments.",
     tr_lead="More than fifteen procedures — from clinical dermatology to injectables and lasers.",
-    tr_alt="Dr. Karina Rauashde in black scrubs beside a laser device",
     tr_jump="Jump to",
     proc=[
         ("injectables", "syringe", "Injectables", "Botulinum toxin, fillers and skin boosters for the face, neck and body.", [
@@ -200,12 +196,11 @@ T["en"] = dict(
     ],
 
     # ── contact
-    c_title="Let’s talk.",
-    c_lead="For job opportunities, collaboration or consultations — in Arabic, Russian or English.",
+    c_title="I’m here to listen.",
+    c_lead="Every skin has its own story. Call, message or write — in Arabic, Russian or English. "
+           "I’ll be glad to hear from you.",
     c_phone="Phone", c_whatsapp="WhatsApp", c_whatsapp_v="Send a message",
     c_email="Email", c_location="Based in", c_location_v="Riyadh, Saudi Arabia",
-    c_cv_title="The full CV.",
-    c_cv_text="Experience, procedures, education and licensing on two pages.",
 
     # ── footer
     foot_tagline="Dr. Karina Rauashde — Dermatologist · Riyadh, Saudi Arabia",
@@ -247,8 +242,7 @@ T["ar"] = dict(
     more="اعرف المزيد",
     next="التالي",
     cta_contact="تواصل معي",
-    cta_cv="تحميل السيرة الذاتية",
-    cv_meta="PDF · صفحتان · بالإنجليزية",
+    cta_about="تعرّف على كارينا",
 
     hero_eyebrow="طبيبة أمراض جلدية · الرياض",
     hero_title="د. كارينا الرواشدة",
@@ -265,14 +259,13 @@ T["ar"] = dict(
         "experience": ("الخبرة.", "من الإقامة الطبية في موسكو إلى عيادات أسهب في الرياض."),
         "treatments": ("العلاجات.", "الحقن التجميلية والليزر وتجديد البشرة والأمراض الجلدية."),
         "education": ("التعليم والترخيص.", "جامعة فولغوغراد الطبية وجامعة RUDN وتصنيف مهني سعودي."),
-        "contact": ("لنتواصل.", "بالعربية أو الروسية أو الإنجليزية."),
+        "contact": ("لكل بشرة حكاية.", "وأنا هنا لأستمع إليك — بالعربية أو الروسية أو الإنجليزية."),
     },
     lic_tile_rank="أخصائي",
     lic_tile_field="الأمراض الجلدية",
 
     about_title="تعرّف على كارينا.",
     about_lead="عناية بالبشرة والشعر والأظافر، مصمّمة لكل مريض.",
-    about_alt="د. كارينا الرواشدة بمعطف طبي أبيض فوق زي طبي أسود",
     about_intro="طبيبة أمراض جلدية بخبرة تزيد على خمس سنوات في الممارسة الطبية، أعمل حاليًا في عيادات أسهب بالرياض.",
     about_p=[
         "أشخّص الأمراض الحادة والمزمنة للجلد والشعر والأظافر وأعالجها — كحب الشباب والوردية والصدفية والإكزيما "
@@ -334,7 +327,6 @@ T["ar"] = dict(
 
     tr_title="العلاجات.",
     tr_lead="أكثر من خمسة عشر إجراءً — من الأمراض الجلدية إلى الحقن التجميلية والليزر.",
-    tr_alt="د. كارينا الرواشدة بزي طبي أسود بجوار جهاز ليزر",
     tr_jump="انتقل إلى",
     proc=[
         ("injectables", "syringe", "الحقن التجميلية", "البوتوكس والفيلر ومعززات البشرة للوجه والرقبة والجسم.", [
@@ -383,12 +375,11 @@ T["ar"] = dict(
         ("2022 — 2023", "المعهد المهني الأول للتجميل", "التجميل الطبي (الكوزمتولوجي)", "موسكو، روسيا"),
     ],
 
-    c_title="لنتواصل.",
-    c_lead="لفرص العمل أو التعاون أو الاستشارات — بالعربية أو الروسية أو الإنجليزية.",
+    c_title="أنا هنا لأستمع إليك.",
+    c_lead="لكل بشرة حكايتها الخاصة. اتصل أو راسلني أو اكتب لي — بالعربية أو الروسية أو الإنجليزية. "
+           "يسعدني أن أسمع منك.",
     c_phone="الهاتف", c_whatsapp="واتساب", c_whatsapp_v="مراسلة عبر واتساب",
     c_email="البريد الإلكتروني", c_location="مقيمة في", c_location_v="الرياض، المملكة العربية السعودية",
-    c_cv_title="السيرة الذاتية كاملة.",
-    c_cv_text="الخبرة والإجراءات والتعليم والترخيص في صفحتين.",
 
     foot_tagline="د. كارينا الرواشدة — طبيبة أمراض جلدية · الرياض، المملكة العربية السعودية",
     foot_pages="الصفحات",
@@ -429,8 +420,7 @@ T["ru"] = dict(
     more="Подробнее",
     next="Далее",
     cta_contact="Связаться",
-    cta_cv="Скачать резюме",
-    cv_meta="PDF · 2 страницы · на английском",
+    cta_about="Обо мне",
 
     hero_eyebrow="Врач-дерматовенеролог · Эр-Рияд",
     hero_title="Карина Рауашде",
@@ -447,14 +437,13 @@ T["ru"] = dict(
         "experience": ("Опыт.", "От ординатуры в Москве до Ashab Clinics в Эр-Рияде."),
         "treatments": ("Процедуры.", "Инъекции, лазеры, обновление кожи и клиническая дерматология."),
         "education": ("Образование и лицензии.", "ВолгГМУ, РУДН и профессиональная классификация SCFHS."),
-        "contact": ("Связаться.", "На русском, арабском или английском."),
+        "contact": ("У каждой кожи своя история.", "Я готова её выслушать — на русском, арабском или английском."),
     },
     lic_tile_rank="Registrar",
     lic_tile_field="Дерматология",
 
     about_title="Обо мне.",
     about_lead="Кожа, волосы и ногти — индивидуальный подход к каждому пациенту.",
-    about_alt="Карина Рауашде в белом халате поверх чёрного медицинского костюма",
     about_intro="Врач-дерматовенеролог с опытом врачебной практики более пяти лет. "
                 "Сейчас работаю в Ashab Clinics в Эр-Рияде.",
     about_p=[
@@ -520,7 +509,6 @@ T["ru"] = dict(
 
     tr_title="Процедуры.",
     tr_lead="Более пятнадцати методик — от клинической дерматологии до инъекций и лазеров.",
-    tr_alt="Карина Рауашде в чёрном медицинском костюме рядом с лазерным аппаратом",
     tr_jump="Перейти к разделу",
     proc=[
         ("injectables", "syringe", "Инъекционная косметология", "Ботулинотерапия, филлеры и скинбустеры для лица, шеи и тела.", [
@@ -571,12 +559,11 @@ T["ru"] = dict(
         ("2022 — 2023", "Первый профессиональный институт эстетики", "Косметология", "Москва"),
     ],
 
-    c_title="Связаться со мной.",
-    c_lead="Предложения о работе, сотрудничество или консультации — на русском, арабском или английском.",
+    c_title="Я готова вас выслушать.",
+    c_lead="У каждой кожи своя история. Позвоните, напишите в WhatsApp или на почту — на русском, "
+           "арабском или английском. Буду рада вам.",
     c_phone="Телефон", c_whatsapp="WhatsApp", c_whatsapp_v="Написать сообщение",
     c_email="Эл. почта", c_location="Город", c_location_v="Эр-Рияд, Саудовская Аравия",
-    c_cv_title="Полное резюме.",
-    c_cv_text="Опыт, процедуры, образование и лицензии на двух страницах.",
 
     foot_tagline="Карина Рауашде — врач-дерматовенеролог · Эр-Рияд, Саудовская Аравия",
     foot_pages="Разделы",
