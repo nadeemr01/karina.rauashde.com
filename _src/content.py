@@ -2,9 +2,9 @@
 # Facts come from "Karina CV 2026.pdf" (updated 19.11.2026: Ashab Clinics, Riyadh; SCFHS Registrar).
 # Do not add the SMLE back — the family asked for it to be removed; the SCFHS classification replaces it.
 
-PHONE_DISPLAY = "+7 961 668-94-81"
-PHONE_TEL = "+79616689481"
-WHATSAPP = "https://wa.me/79616689481"
+PHONE_DISPLAY = "+966 53 003 4510"
+PHONE_TEL = "+966530034510"
+WHATSAPP = "https://wa.me/966530034510"
 EMAIL = "karinar888@mail.ru"
 SITE = "https://karina.rauashde.com/"
 
