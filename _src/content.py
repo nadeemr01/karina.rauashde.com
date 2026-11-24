@@ -14,10 +14,11 @@ SWITCH_LABEL = {"en": "EN", "ar": "عربي", "ru": "RU"}
 SWITCH_NAME = {"en": "English", "ar": "العربية", "ru": "Русский"}
 
 # Pages, in menu order. "" is the home page.
-PAGES = ["home", "about", "experience", "treatments", "education", "contact"]
+PAGES = ["home", "about", "experience", "treatments", "results", "education", "contact"]
 SLUG = {"home": "", "about": "about/", "experience": "experience/", "treatments": "treatments/",
-        "education": "education/", "contact": "contact/"}
-NEXT = {"about": "experience", "experience": "treatments", "treatments": "education", "education": "contact"}
+        "results": "results/", "education": "education/", "contact": "contact/"}
+NEXT = {"about": "experience", "experience": "treatments", "treatments": "results", "results": "education",
+        "education": "contact"}
 
 T = {}
 
@@ -570,4 +571,95 @@ T["ru"] = dict(
     foot_contact="Контакты",
     foot_lang="Язык",
     copyright="© 2026 Карина Рауашде. Все права защищены.",
+)
+
+
+# ───────────────────────────── RESULTS PAGE ─────────────────────────────
+# Before/after gallery. The photos and panel positions come from _src/prep_results.py → _src/results.json.
+RESULT_CATS = ["lips", "botox", "vessels", "skin"]
+
+T["en"]["nav"]["results"] = "Results"
+T["en"]["meta"]["results"] = (
+    "Results — Dr. Karina Rauashde",
+    "Before-and-after photos: lip augmentation, Botox, laser treatment of spider veins, hair loss and "
+    "removal of a skin growth.")
+T["en"]["tiles"]["results"] = ("Real results.", "Before and after — lips, Botox, spider veins, skin and hair.")
+T["en"].update(
+    res_title="Results.",
+    res_lead="Real patients, real changes — lips, Botox, spider veins, skin and hair.",
+    res_note="Eyes are blurred to protect patients’ privacy. Results vary from person to person, and some "
+             "“after” photos were taken right after the procedure, before redness or swelling settled.",
+    res_filter="Show",
+    res_all="All",
+    res_cats={"lips": "Lips", "botox": "Botox", "vessels": "Spider veins", "skin": "Skin &amp; hair"},
+    before="Before", after="After",
+    res_open="open larger",
+    lb_prev="Previous", lb_next="Next photo",
+    cases={
+        "lips": ("Lip augmentation", "Dermal filler"),
+        "botox_upper": ("Frown lines, forehead and crow’s feet", "Botulinum toxin"),
+        "gummy": ("Gummy smile", "Botulinum toxin"),
+        "vessels_face": ("Spider veins on the face", "Laser"),
+        "vessels_cheek": ("Spider vein on the cheek", "Laser"),
+        "vessels_legs": ("Spider veins on the legs", "Laser"),
+        "hair": ("Hair loss", "Trichology"),
+        "lesion": ("Removal of a skin growth", "Dermatologic surgery"),
+    },
+)
+
+T["ar"]["nav"]["results"] = "النتائج"
+T["ar"]["meta"]["results"] = (
+    "النتائج — د. كارينا الرواشدة",
+    "صور قبل وبعد: تكبير الشفاه، البوتوكس، علاج الشعيرات الدموية بالليزر، تساقط الشعر وإزالة الآفات الجلدية.")
+T["ar"]["tiles"]["results"] = ("نتائج حقيقية.", "قبل وبعد: الشفاه والبوتوكس والشعيرات الدموية والبشرة والشعر.")
+T["ar"].update(
+    res_title="النتائج.",
+    res_lead="مرضى حقيقيون وتغيّرات حقيقية — الشفاه والبوتوكس والشعيرات الدموية والبشرة والشعر.",
+    res_note="أُخفيت العيون حفاظًا على خصوصية المرضى. تختلف النتائج من شخص لآخر، وبعض صور «بعد» التُقطت "
+             "مباشرة بعد الإجراء قبل أن يزول الاحمرار أو التورّم.",
+    res_filter="عرض",
+    res_all="الكل",
+    res_cats={"lips": "الشفاه", "botox": "البوتوكس", "vessels": "الشعيرات الدموية", "skin": "البشرة والشعر"},
+    before="قبل", after="بعد",
+    res_open="عرض بحجم أكبر",
+    lb_prev="السابق", lb_next="الصورة التالية",
+    cases={
+        "lips": ("تكبير الشفاه", "حقن الفيلر"),
+        "botox_upper": ("خطوط العبوس والجبهة وأقدام الغراب", "البوتوكس"),
+        "gummy": ("الابتسامة اللثوية", "البوتوكس"),
+        "vessels_face": ("الشعيرات الدموية الظاهرة في الوجه", "الليزر"),
+        "vessels_cheek": ("شعيرة دموية ظاهرة على الخد", "الليزر"),
+        "vessels_legs": ("الأوردة العنكبوتية في الساقين", "الليزر"),
+        "hair": ("تساقط الشعر", "طب الشعر"),
+        "lesion": ("إزالة آفة جلدية", "جراحة جلدية"),
+    },
+)
+
+T["ru"]["nav"]["results"] = "Результаты"
+T["ru"]["meta"]["results"] = (
+    "Результаты — Карина Рауашде",
+    "Фото до и после: увеличение губ, ботулинотерапия, лазерное удаление сосудистых звёздочек, выпадение волос, "
+    "удаление новообразований кожи.")
+T["ru"]["tiles"]["results"] = ("Результаты.", "До и после: губы, ботулинотерапия, сосуды, кожа и волосы.")
+T["ru"].update(
+    res_title="Результаты.",
+    res_lead="Реальные пациенты, реальные изменения — губы, ботулинотерапия, сосуды, кожа и волосы.",
+    res_note="Глаза скрыты, чтобы сохранить конфиденциальность пациентов. Результаты индивидуальны; часть фото "
+             "«после» сделана сразу после процедуры, пока не прошли покраснение и отёк.",
+    res_filter="Показать",
+    res_all="Все",
+    res_cats={"lips": "Губы", "botox": "Ботулинотерапия", "vessels": "Сосуды", "skin": "Кожа и волосы"},
+    before="До", after="После",
+    res_open="открыть крупнее",
+    lb_prev="Назад", lb_next="Следующее фото",
+    cases={
+        "lips": ("Увеличение губ", "Филлер"),
+        "botox_upper": ("Межбровье, лоб и «гусиные лапки»", "Ботулинотерапия"),
+        "gummy": ("«Десневая» улыбка", "Ботулинотерапия"),
+        "vessels_face": ("Сосудистые звёздочки на лице", "Лазер"),
+        "vessels_cheek": ("Сосудистая звёздочка на щеке", "Лазер"),
+        "vessels_legs": ("Сосудистые звёздочки на ногах", "Лазер"),
+        "hair": ("Выпадение волос", "Трихология"),
+        "lesion": ("Удаление новообразования кожи", "Дерматохирургия"),
+    },
 )

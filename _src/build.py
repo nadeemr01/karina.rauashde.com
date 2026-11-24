@@ -11,10 +11,10 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-from content import (T, LANGS, LANG_PREFIX, SWITCH_LABEL, SWITCH_NAME, PAGES, SLUG, NEXT,  # noqa: E402
+from content import (T, LANGS, LANG_PREFIX, SWITCH_LABEL, SWITCH_NAME, PAGES, SLUG, NEXT, RESULT_CATS,  # noqa: E402
                      PHONE_DISPLAY, PHONE_TEL, WHATSAPP, EMAIL, SITE)
 
-VERSION = "3"  # bump after editing css/js so browsers fetch the new files
+VERSION = "4"  # bump after editing css/js so browsers fetch the new files
 
 ICONS = {
     "syringe": '<path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3a2.4 2.4 0 0 1-3.4 0l-.6-.6a2.4 2.4 0 0 1 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/>',
@@ -30,6 +30,7 @@ ICONS = {
     "mail": '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
     "download": '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
     "chev": '<path d="m9 5 7 7-7 7"/>',
+    "x": '<path d="M18 6 6 18M6 6l12 12"/>',
 }
 
 
@@ -285,6 +286,30 @@ def license_card(lang, tag="h2"):
         </div>"""
 
 
+with open(os.path.join(HERE, "results.json"), encoding="utf-8") as _f:
+    RESULTS = json.load(_f)  # written by _src/prep_results.py
+FEATURED = "lips-4"         # before/after shown on the home page
+
+
+def case_frame(lang, c, alt, eager=False):
+    """A collage with Before/After labels placed on its panels."""
+    t = T[lang]
+    tags = "".join(
+        f'<span class="tag tag-{p["label"]}" style="left:{p["x"]}%;top:{p["y"]}%" aria-hidden="true">{t[p["label"]]}</span>'
+        for p in c["panels"]
+    )
+    loading = 'fetchpriority="high"' if eager else 'loading="lazy"'
+    return (f'<span class="case-frame" style="--ar:{c["w"]}/{c["h"]}">'
+            f'<img src="/img/results/{c["id"]}.webp" width="{c["w"]}" height="{c["h"]}" alt="{alt}" {loading} decoding="async">'
+            f'{tags}</span>')
+
+
+def case_alt(lang, c):
+    t = T[lang]
+    title = t["cases"][c["key"]][0]
+    return f'{title} — {t["before"]} / {t["after"]}'
+
+
 # ───────────────────────── pages ─────────────────────────
 
 def body_home(lang):
@@ -315,6 +340,7 @@ def body_home(lang):
     tr_icons = "".join(
         f'<span class="tr-icon">{icon(ic)}<small>{title}</small></span>' for _, ic, title, _, _ in t["proc"]
     )
+    featured = next(c for c in RESULTS if c["id"] == FEATURED)
     edu_title, edu_sub = t["tiles"]["education"]
     c_title, c_sub = t["tiles"]["contact"]
     return f"""
@@ -353,6 +379,10 @@ def body_home(lang):
           <b>{t["lic_tile_rank"]}</b>
           <span>{t["lic_tile_field"]} · SCFHS</span>
         </div>
+      </a>
+      <a class="tile tile-results reveal" href="{href(lang, "results")}">
+        <div class="tile-copy"><h2 class="tile-title">{t["tiles"]["results"][0]}</h2><p class="tile-sub">{t["tiles"]["results"][1]}</p><span class="more">{t["more"]}{CHEV}</span></div>
+        <div class="res-art">{case_frame(lang, featured, case_alt(lang, featured))}</div>
       </a>
       <div class="tile tile-contact reveal">
         <div class="tile-copy">
@@ -475,6 +505,41 @@ def body_treatments(lang):
 </main>"""
 
 
+def body_results(lang):
+    t = T[lang]
+    buttons = f'<button type="button" data-filter="all" aria-pressed="true">{t["res_all"]}</button>' + "".join(
+        f'<button type="button" data-filter="{cat}" aria-pressed="false">{t["res_cats"][cat]}</button>'
+        for cat in RESULT_CATS
+    )
+    cards = []
+    for c in sorted(RESULTS, key=lambda c: RESULT_CATS.index(c["cat"])):
+        title, note = t["cases"][c["key"]]
+        cards.append(f"""
+        <li class="case reveal" data-cat="{c["cat"]}">
+          <a class="case-media" href="/img/results/{c["id"]}.webp" aria-label="{title} — {t["res_open"]}">{case_frame(lang, c, case_alt(lang, c))}</a>
+          <div class="case-cap"><h2>{title}</h2><p>{note}</p></div>
+        </li>""")
+    return f"""
+<main id="main">{phero(t["res_title"], t["res_lead"])}
+  <nav class="seg seg-filter" aria-label="{t["res_filter"]}"><div class="seg-inner">{buttons}</div></nav>
+
+  <section class="section gray results">
+    <div class="wrap">
+      <ul class="cases">{"".join(cards)}
+      </ul>
+      <p class="res-note">{t["res_note"]}</p>
+    </div>
+  </section>
+{next_link(lang, "results")}
+  <dialog class="lb" aria-label="{t["res_title"].rstrip(".")}">
+    <button class="lb-btn lb-close" type="button" aria-label="{t["close"]}">{icon("x")}</button>
+    <button class="lb-btn lb-prev" type="button" aria-label="{t["lb_prev"]}">{icon("chev", "chev lb-chev-prev")}</button>
+    <button class="lb-btn lb-next" type="button" aria-label="{t["lb_next"]}">{icon("chev", "chev")}</button>
+    <figure class="lb-fig"><div class="lb-media"></div><figcaption></figcaption></figure>
+  </dialog>
+</main>"""
+
+
 def body_education(lang):
     t = T[lang]
     edu = "".join(f"""
@@ -516,7 +581,7 @@ def body_contact(lang):
 </main>"""
 
 
-BODIES = {"home": body_home, "about": body_about, "experience": body_experience,
+BODIES = {"home": body_home, "about": body_about, "experience": body_experience, "results": body_results,
           "treatments": body_treatments, "education": body_education, "contact": body_contact}
 
 
